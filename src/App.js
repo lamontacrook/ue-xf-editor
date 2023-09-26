@@ -1,24 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import ModelManager from './utils/modelmanager';
 
-function App() {
+const App = () => {
+  const [container, setContainer] = useState({});
+  const {REACT_APP_AEM_URL, REACT_APP_AEM_XF} = process.env;
+  useEffect(() => {
+    fetch(`${REACT_APP_AEM_URL}${REACT_APP_AEM_XF}.model.json`,
+      { credentials: 'include' })
+      .then((data) => {
+        if (data) {
+          data.json().then((json) => {
+            setContainer(json[':items'].root);
+          });
+        }
+      })
+  }, [REACT_APP_AEM_URL, REACT_APP_AEM_XF]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HelmetProvider>
+      <div className='App'>
+        <Helmet>
+          <meta name='urn:adobe:aem:editor:aemconnection' content={`aem:${REACT_APP_AEM_URL}`} />
+          <title>{container?.title}</title>
+        </Helmet>
+        <ModelManager json={container} />
+      </div>
+      <a href='https://experience.adobe.com/#/aem/editor/canvas/localhost:3000/'>Open in Editor</a>
+    </HelmetProvider>
   );
 }
 
