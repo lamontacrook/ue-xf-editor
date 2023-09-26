@@ -27,7 +27,7 @@ const App = () => {
         </Helmet>
         <ModelManager json={container} />
       </div>
-      <a href='https://experience.adobe.com/#/aem/editor/canvas/localhost:3000/'>Open in Editor</a>
+      <a href='https://experience.adobe.com/#/aem/editor/canvas/rococo-kataifi-8b0685.netlify.app/'>Open in Editor</a>
     </HelmetProvider>
   );
 }
