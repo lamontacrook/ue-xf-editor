@@ -28,7 +28,6 @@ const Container = ({ content }) => {
     <div {...elemProps} className='container'>
       {elements && (
         Object.keys(elements).map((elem) => {
-          console.log(elem);
           const type = elements[elem][':type'].split('/').pop();
           const Component = componentMapping[toProperCase(type)];
           if(Component)

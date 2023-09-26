@@ -23,7 +23,6 @@ const ModelManager = ({ json }) => {
   const entry = container(json);
  
   return Object.keys(entry).map((e) => {
-    console.log(entry[e]);
     const Component = componentMapping[toProperCase(e)];
     return <Component key={e} content={entry[e]} />;
   });
